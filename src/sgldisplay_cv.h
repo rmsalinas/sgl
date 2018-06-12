@@ -4,7 +4,7 @@
 #include <memory>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
-#include "sglviewer_exports.h"
+#include "sgl_exports.h"
 #include "sgldisplay.h"
 namespace sgl{
 class APP_SGLVIEWER_TOOLS_API SglDisplay_CV :public SglDisplay
@@ -37,7 +37,7 @@ public:
 
 
 
-    int show( ){
+    int display( bool needFullGUIInitialization){
         _scn.setCameraParams(_f,_w,_h,3);
         _imshow=cv::Mat(_h,_w,CV_8UC3,_scn.getBuffer());
         _sglDrawer->draw(_scn);

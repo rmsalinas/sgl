@@ -1,6 +1,14 @@
 SET(LIBNAME sgl)
 set(sources  sgldisplay.cpp )
-set(headers  sgldisplay.h  sgl.h  sglviewer_exports.h   )
+set(headers  sgldisplay.h  sgl.h  sgl_exports.h   )
+
+IF(Qt5Widgets_FOUND)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(sources_QT sgldisplay_qt.cpp sgldisplay_qt_internal.cpp)
+set(headers_QT sgldisplay_qt.h sgldisplay_qt_internal.h)
+add_definitions(-DHAS_QT)
+ENDIF()
 
 
 IF(OpenCV_FOUND)
@@ -10,17 +18,14 @@ IF(OpenCV_FOUND)
 ENDIF()
 
 
-IF(Qt5Widgets-FOUND)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(sources_QT sglviewer_qt.cpp)
-set(headers_QT sglviewer_qt.h)
-qt5_use_modules(${LIBNAME}  Widgets  )
-add_definitions(-DHAS_QT)
-ENDIF()
+
 
 
 add_library(${LIBNAME}  ${sources} ${headers} ${sources_QT} ${headers_QT} ${headers_cv})
+
+IF(Qt5Widgets_FOUND)
+qt5_use_modules(sgl  Widgets  )
+ENDIF()
 
 set_target_properties(${LIBNAME} PROPERTIES          # create *nix style library versions + symbolic links
     DEFINE_SYMBOL ${LIBNAME}_DSO_EXPORTS

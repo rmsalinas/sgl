@@ -2,12 +2,12 @@
 
 #include "sgldisplay.h"
 #include "sgldisplay_cv.h"
-
+#include "sgldisplay_qt.h"
 namespace sgl {
 std::shared_ptr<SglDisplay> SglDisplay::create(std::shared_ptr<sgl::SceneDrawer> drawer,int w,int h,float f){
   std::shared_ptr<SglDisplay> disp;
 
-  disp=std::make_shared<SglDisplay_CV>(drawer,w,h,f);
+  disp=std::make_shared<SglDisplay_QT>(drawer,w,h,f);
   disp->_sglDrawer=drawer;
 
   return disp;

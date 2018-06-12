@@ -4,7 +4,7 @@
 #define _SglDisplay_H
 
 #include <memory>
-#include "sglviewer_exports.h"
+#include "sgl_exports.h"
 #include "sgl.h"
 namespace sgl{
 
@@ -22,7 +22,7 @@ protected:
 public:
 
     static std::shared_ptr<SglDisplay> create(std::shared_ptr<SceneDrawer> drawer,int w,int h,float f);
-    virtual int show( )=0;
+    virtual int display( bool needFullGUIInitialization=true)=0;
     void zoom(float value);
     void rotate(float x,float z);
     void translate(float x,float y);
