@@ -75,7 +75,7 @@ int main(int argc,char **argv){
     sglDisplay ->setViewMatrix(cam);
 
     //show and stays there until ESC pressed
-    sglDisplay->show();
+    sglDisplay->display();
     }catch(std::exception &ex){
         cerr<<ex.what()<<endl;
     }

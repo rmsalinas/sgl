@@ -7,7 +7,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(sources_QT sgldisplay_qt.cpp sgldisplay_qt_internal.cpp)
 set(headers_QT sgldisplay_qt.h sgldisplay_qt_internal.h)
-add_definitions(-DHAS_QT)
+add_definitions(-DSGL_QT)
 ENDIF()
 
 
@@ -17,6 +17,7 @@ IF(OpenCV_FOUND)
     SET(REQUIRED_LIBS ${REQUIRED_LIBS} opencv_core opencv_highgui)
 ENDIF()
 
+SET(REQUIRED_LIBS ${REQUIRED_LIBS} -pthread)
 
 
 

@@ -8,12 +8,8 @@
 #include "sgl.h"
 namespace sgl{
 
-class APP_SGLVIEWER_TOOLS_API SceneDrawer{
-public:
-    virtual void draw(Scene &scn)=0;
-};
 
-
+class SceneDrawer;
 class APP_SGLVIEWER_TOOLS_API SglDisplay
 {
 protected:
@@ -22,7 +18,8 @@ protected:
 public:
 
     static std::shared_ptr<SglDisplay> create(std::shared_ptr<SceneDrawer> drawer,int w,int h,float f);
-    virtual int display( bool needFullGUIInitialization=true)=0;
+    virtual int display( bool blocking=false,bool needFullGUIInitialization=true)=0;
+    virtual void redraw()=0;
     void zoom(float value);
     void rotate(float x,float z);
     void translate(float x,float y);
@@ -30,6 +27,25 @@ public:
 
     Scene & getScene(){return _scn;}
 
+};
+
+
+
+class APP_SGLVIEWER_TOOLS_API SceneDrawer{
+    friend class SglDisplay;
+public:
+    virtual void draw(Scene &scn)=0;
+
+    //call whenever the scene contain has changed and need to redraw it
+    void sceneUpdated();
+
+    //do not use
+private:
+
+    typedef std::function<void(void)> callbf;
+    std::vector<callbf > v_callbckFs;
+
+    void setUpdateCallBack(callbf f) {v_callbckFs.push_back(f);}
 };
 }
 #endif

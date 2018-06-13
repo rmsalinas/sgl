@@ -50,6 +50,15 @@ void	SglDisplay_QT_Internal::mouseMoveEvent(QMouseEvent *event){
         redraw();
     }
 }
+void	SglDisplay_QT_Internal::keyPressEvent(QKeyEvent *k){
+    switch ( k->key() )
+        {
+            case Qt::Key_Escape:
+        close();
+        break;
+    };
+}
+
 void	SglDisplay_QT_Internal::mousePressEvent(QMouseEvent *event){
     if(!_sglDrawer) return;
     if (event->button()== Qt::LeftButton){

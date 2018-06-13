@@ -26,6 +26,7 @@ sgl::Scene *_scene;
     void	mousePressEvent(QMouseEvent *event);
     void	mouseReleaseEvent(QMouseEvent *event);
     void	wheelEvent(QWheelEvent *event);
+    void keyPressEvent(QKeyEvent *ev);
 
 
     QPointF prevMousePos;

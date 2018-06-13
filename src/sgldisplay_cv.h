@@ -15,7 +15,7 @@ class APP_SGLVIEWER_TOOLS_API SglDisplay_CV :public SglDisplay
     int snapShotIndex=0;
     int waitKeyTime=0;
     cv::Mat _imshow;
-    bool canLeave=false;
+    bool isBlocking=false;
     bool bExitOnUnUnsedKey=false;
 
 public:
@@ -37,14 +37,16 @@ public:
 
 
 
-    int display( bool needFullGUIInitialization){
+    int display( bool blocking,bool needFullGUIInitialization){
         _scn.setCameraParams(_f,_w,_h,3);
         _imshow=cv::Mat(_h,_w,CV_8UC3,_scn.getBuffer());
         _sglDrawer->draw(_scn);
-        int key,leaveNow=false;
+
+        int key,isBlocking=blocking;
+        bool leaveNow=false;
         do{
             cv::imshow(_wname,_imshow);
-            if (canLeave)waitKeyTime=2;
+            if (!isBlocking)waitKeyTime=2;
             else waitKeyTime=0;
             key=cv::waitKey(waitKeyTime);
             //            if (k!=255) cout<<"wkh="<<k<<endl;
@@ -54,12 +56,14 @@ public:
             else  if ( bExitOnUnUnsedKey  && key!=255 ) leaveNow=true;
 
             if (create|| update)         _sglDrawer->draw(_scn);
-
-
-        } while( (!canLeave && !leaveNow) && key!=27);
+        } while( (isBlocking && !leaveNow) && key!=27);
         return key;
     }
 
+  void redraw(){
+      _sglDrawer->draw( _scn);
+      cv::imshow( _wname, _imshow);
+  }
 
 
     struct mouseInfo{
@@ -70,7 +74,7 @@ public:
 
     static   void mouseCallBackFunc(int event, int x, int y, int flags, void* userdata){
         SglDisplay_CV *Sv=(SglDisplay_CV*)userdata;
-        bool redraw=false;
+        bool bRedraw=false;
         if  ( event == cv::EVENT_LBUTTONDOWN ){
             Sv->mi.isRotating=Sv->mi.isTranslating=Sv->mi.isZooming=false;
             if ( flags&cv::EVENT_FLAG_CTRLKEY)
@@ -89,22 +93,20 @@ public:
 
             if (Sv->mi.isRotating){
                 Sv->_scn.rotate(-float(dif.y)/100.   , -float(dif.x)/100.);
-                redraw=true;
+                bRedraw=true;
             }
             else if (Sv->mi.isZooming){
-                redraw=true;
+                bRedraw=true;
                 Sv->_scn.zoom(-dif.y*0.01);
             }
             else if (Sv->mi.isTranslating){
                 Sv->_scn.translate(float(-dif.x)/100., float(-dif.y)/100);
-                redraw=true;
+                bRedraw=true;
             }
         }
         Sv->mi.pos=sgl::Point2(x,y);
-        if (redraw)     {
-            Sv->_sglDrawer->draw(Sv->_scn);
-            cv::imshow(Sv->_wname,Sv->_imshow);
-        }
+        if (bRedraw)
+            Sv->redraw();
     }
 
 
