@@ -10,11 +10,11 @@ using namespace std;
 //this is the class that draws the scene
 class myDrawer:public sgl::SceneDrawer
 {
-
 public:
     float sz=0.4;
 
     void increaseSize(){
+
         sz*=1.1;
         sceneUpdated();
     }
