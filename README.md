@@ -10,7 +10,11 @@ easily integrated in your project. Additionally, we provide classes for easily v
         * CPU only
         * A header file only
 
+##
+# Citing
 
+If you use this project in academic research you must cite us. This project is part of the ucoslam project. Visit [ucoslam.com](ucoslam.com) for more information
+about how to cite this project.
 
 ##
 ## Main classes:
