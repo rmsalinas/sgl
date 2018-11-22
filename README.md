@@ -13,7 +13,7 @@ easily integrated in your project. Additionally, we provide classes for easily v
 ##
 # Citing
 
-If you use this project in academic research you must cite us. This project is part of the ucoslam project. Visit [ucoslam.com](ucoslam.com) for more information
+If you use this project in academic research you must cite us. This project is part of the ucoslam project. Visit [ucoslam.com](http://ucoslam.com) for more information
 about how to cite this project.
 
 ##
